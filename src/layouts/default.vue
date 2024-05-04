@@ -33,7 +33,6 @@ const menu = [
   { title: "Order book", to: { name: "/order_book" } },
 ];
 function toggleDrawer() {
-  console.log("toggled");
   drawer.value = !drawer.value;
 }
 </script>

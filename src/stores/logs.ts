@@ -9,7 +9,6 @@ export const useLogsStore = defineStore("logs", () => {
       action,
       time: new Date(),
     });
-    console.log(logs);
   }
   return { logs, addRecord };
 });

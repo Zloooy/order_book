@@ -13,8 +13,6 @@ export const useSettingsStore = defineStore("settings", () => {
   const app = useAppStore();
   function changeCurrencyPair(new_pair: CurrencyPairEnum) {
     if (new_pair !== app.currency_pair) {
-      console.log(`new_pair ${new_pair}`);
-      console.log(`currency_pair ${app.currency_pair}`);
       logs.addRecord(`${app.currency_pair} ➛ ${new_pair}`);
       app.setCurrencyPair(new_pair);
     }

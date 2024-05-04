@@ -13,7 +13,6 @@ export const useOrderBookStore = defineStore("order_book", () => {
   const bids: Ref<Order[]> = ref([]);
   const ws: Ref<WebSocket | undefined> = ref();
   const lastUpdateId: Ref<number> = ref(-1);
-  const firstEvent: Ref<boolean> = ref(true);
   const book_events: Ref<[]> = ref([]);
   function $reset() {
     ws.value?.close?.();
@@ -49,11 +48,11 @@ export const useOrderBookStore = defineStore("order_book", () => {
       asks.value = data.asks
         .map(order_mapper)
         .toSorted(order_comparator)
-        .slice(app.page_size);
+        .slice(0, app.page_size);
       bids.value = data.bids
         .map(order_mapper)
         .toSorted(order_comparator)
-        .slice(app.page_size);
+        .slice(0, app.page_size);
       lastUpdateId.value = data.lastUpdateId;
     }
   }
@@ -89,7 +88,7 @@ export const useOrderBookStore = defineStore("order_book", () => {
     }
     orders.value.sort(order_comparator);
     if (orders.value.length > app.page_size) {
-      orders.value = orders.value.slice(app.page_size);
+      orders.value = orders.value.slice(0, app.page_size);
     }
   }
   function processActualMessage(message) {
@@ -98,26 +97,10 @@ export const useOrderBookStore = defineStore("order_book", () => {
     lastUpdateId.value = message.u;
   }
   onWebSocketMessage = function (m) {
-    console.log("onWebSocketMessage");
     if (m.data) {
-      console.log("message has data");
       const message = JSON.parse(m.data);
-      console.log(
-        `firstEvent ${firstEvent.value}\nlastUpdateId ${lastUpdateId.value}\nu ${message.u}\nU ${message.U}`,
-      );
-      // if (firstEvent.value && message.U <= lastUpdateId.value + 1  && message.u >= lastUpdateId.value + 1) {
-      //     console.log('firstEvent');
-      //     processActualMessage(message);
-      //     firstEvent.value = false;
-      // }
-      //else
       if (message.u > lastUpdateId.value) {
-        console.log("not firstEvent");
         processActualMessage(message);
-      } else {
-        console.log("dropping message");
-        // $reset();
-        // fetchDepth();
       }
     }
   };

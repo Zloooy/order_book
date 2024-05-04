@@ -2,11 +2,11 @@
   <v-container>
     <v-row no-gutters>
       <v-col cols="12" sm="6" class="pa-2">
-        <v-text class="text-h3 d-none d-md-inline pb-1"> Asks </v-text>
+        <span class="text-h3 d-none d-md-inline pb-1"> Asks </span>
         <order-book-table :book="asks" price-class="text-green" />
       </v-col>
       <v-col cols="12" sm="6" class="pa-2">
-        <v-text class="text-h3 d-none d-md-inline pb-1"> Bids </v-text>
+        <span class="text-h3 d-none d-md-inline pb-1"> Bids </span>
         <order-book-table :book="bids" price-class="text-red" />
       </v-col>
     </v-row>
