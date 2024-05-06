@@ -1,6 +1,6 @@
 <template>
   <v-table theme="dark" fixed-header height="90vh">
-    <thead>
+    <thead class="bg-grey-darken-4">
       <th class="text-left">Time</th>
       <th class="text-left">Action</th>
     </thead>
